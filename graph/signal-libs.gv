@@ -1,0 +1,212 @@
+
+digraph signal_libs {
+	graph [
+		//label = "signal-libs"
+		//labelloc = t
+		//
+		fontname = "sans-serif"
+		fontsize = 18
+		//fontnames = gd
+		//
+		rankdir = LR
+		//
+		//ranksep=0.65
+		//nodesep=0.3
+		//
+		//bgcolor="transparent" // only relevant for bitmap outputs
+	]
+
+	edge [arrowhead=none]
+
+	node [
+		colorscheme="pastel23"
+		style=filled
+		fontname = "sans-serif"
+		fontsize = 15
+	]
+
+
+	subgraph cluster_legend {
+		graph [label="Legend"]
+		edge [style=invis]
+
+		//ranksep = equally
+		//nodesep=0
+
+		library [fillcolor=3] 
+		bridge [fillcolor=2, shape="hexagon"]
+		client [fillcolor=1, shape="box"]
+		
+		library -> bridge -> client  
+	}
+
+	subgraph cluster_invis {
+		// This is just to add some space above the legend subgraph
+		graph [style=invis]
+		node [style=invis]
+		edge [style=invis]
+		a -> b -> c
+	}
+
+
+	subgraph libs {
+		node [fillcolor=3] 
+		
+		subgraph official {
+			//node [fontname="sans-serif bold"] 	// does not work for SVG 
+			//node[label=<<B>\N</B>>]  // bold by default (for no-`label` nodes); no double quotes for HTML-like labels
+
+			node [width=2.9]
+			proto_java [label=<<B>libsignal-<BR/>protocol-java</B>>]
+			proto_javascript [label=<<B>libsignal-<BR/>protocol-javascript</B>>]
+			proto_c [label=<<B>libsignal-<BR/>protocol-c</B>>]
+
+			node [width=""]
+			serv_java [label=<<B>libsignal-<BR/>service-java</B>>]
+			ls_client [label=<<B>libsignal-<BR/>client</B>>]
+		}
+
+		subgraph unofficial {
+			serv_java_fork [label="libsignal-\nservice-java\n(fork)"]
+
+			signal_cli [label="signal-cli"]
+			signald 
+
+			nanu_c [label="nanu-c/\ntextsecure"]
+			rust_libs [label="rust-libs"]
+			dotnet [label="libsignal-\nservice-dotnet "]
+		}
+
+		{rank=same
+			serv_java
+			serv_java_fork
+			ls_client
+			nanu_c
+			rust_libs
+			dotnet
+		}
+
+	}
+
+
+	subgraph bridges {
+		node [
+			fillcolor=2
+			shape=hexagon
+		]
+
+		purple
+		matrix
+		xmpp
+
+		matrix_weechat [label="weechat-\nmatrix"]
+		matrix_xmpp [label="matrix-\nxmpp-\nbridge"]
+		matrix_irc [label="matrix-\nirc-\nbridge"]
+		xmpp_weechat [label="weechat-\nxmpp-\nscript"]
+		bitlbee
+
+		signal_weechat [label="signal-\nweechat"]
+	}
+
+
+	subgraph clients {
+		node [
+			fillcolor=1
+			shape=box
+		] 
+
+		subgraph official {
+			signal_android [label=<<B>Signal-Android</B>>]
+			signal_ios [label=<<B>Signal-iOS</B>>]
+			signal_desktop [label=<<B>Signal-Desktop</B>>]
+		}
+
+		subgraph unofficial {
+			scli
+			siggo
+			gurk
+			axolotl
+			Pyre_Qt [label="Pyre-Qt"]
+			whisperfish
+			windows [label="Signal-Windows"]
+		}
+
+		subgraph general_chat_progs {
+			weechat [label="WeeChat"]
+		}
+
+		subgraph purple_clients {
+			rank=same
+			Pidgin
+			purple_ellipsis [label="...\n(any purple client)"]
+		}
+
+		subgraph matrix_clients {
+			Element
+			FluffyChat
+			matrix_ellipsis [label="...\n(any matrix client)"]
+		}
+
+		subgraph irc_clients {
+			irssi
+			irc_ellipsis [label="...\n(any IRC client)"]
+		}
+	}
+
+	
+	subgraph virtual {
+		node [shape=point]
+		purple_clients_virt
+		matrix_clients_virt 
+		irc_clients_virt 
+	}
+
+
+	// Connections
+	proto_java -> serv_java 
+	serv_java -> serv_java_fork [constraint=false, style=dashed]
+
+	serv_java_fork -> signal_cli
+	serv_java_fork -> signald
+
+	serv_java -> signal_android
+
+	ls_client -> signal_android
+	ls_client -> signal_ios
+	ls_client -> signal_desktop
+
+	signal_cli -> scli
+	signal_cli -> siggo
+	signal_cli -> gurk [style="dotted"]
+
+	signald -> Pyre_Qt
+
+	signald -> purple
+	purple -> purple_clients_virt
+	purple_clients_virt -> Pidgin
+	purple_clients_virt -> purple_ellipsis
+
+	signald -> matrix
+	matrix -> matrix_clients_virt
+	matrix_clients_virt -> Element
+	matrix_clients_virt -> FluffyChat
+	matrix_clients_virt -> matrix_ellipsis
+	matrix -> matrix_weechat -> weechat
+	matrix -> matrix_xmpp -> xmpp_weechat 
+
+	signald -> xmpp -> xmpp_weechat -> weechat
+
+	signald -> signal_weechat -> weechat
+
+	purple -> bitlbee -> irc_clients_virt
+	matrix -> matrix_irc -> irc_clients_virt
+	irc_clients_virt -> weechat
+	irc_clients_virt -> Pidgin
+	irc_clients_virt -> irssi
+	irc_clients_virt -> irc_ellipsis
+
+	nanu_c -> axolotl
+	rust_libs -> gurk
+	rust_libs -> whisperfish
+	dotnet -> windows
+}
