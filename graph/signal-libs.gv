@@ -33,11 +33,11 @@ digraph signal_libs {
 		//ranksep = equally
 		//nodesep=0
 
-		library [fillcolor=3] 
+		library [fillcolor=3]
 		bridge [fillcolor=2, shape="hexagon"]
 		client [fillcolor=1, shape="box"]
-		
-		library -> bridge -> client  
+
+		library -> bridge -> client
 	}
 
 	subgraph cluster_invis {
@@ -50,10 +50,10 @@ digraph signal_libs {
 
 
 	subgraph libs {
-		node [fillcolor=3] 
-		
+		node [fillcolor=3]
+
 		subgraph official {
-			//node [fontname="sans-serif bold"] 	// does not work for SVG 
+			//node [fontname="sans-serif bold"] 	// does not work for SVG
 			//node[label=<<B>\N</B>>]  // bold by default (for no-`label` nodes); no double quotes for HTML-like labels
 
 			node [width=2.9]
@@ -70,7 +70,7 @@ digraph signal_libs {
 			serv_java_fork [label="libsignal-\nservice-java\n(fork)"]
 
 			signal_cli [label="signal-cli"]
-			signald 
+			signald
 
 			nanu_c [label="nanu-c/\ntextsecure"]
 			rust_libs [label="rust-libs"]
@@ -113,7 +113,7 @@ digraph signal_libs {
 		node [
 			fillcolor=1
 			shape=box
-		] 
+		]
 
 		subgraph official {
 			signal_android [label=<<B>Signal-Android</B>>]
@@ -153,17 +153,17 @@ digraph signal_libs {
 		}
 	}
 
-	
+
 	subgraph virtual {
 		node [shape=point]
 		purple_clients_virt
-		matrix_clients_virt 
-		irc_clients_virt 
+		matrix_clients_virt
+		irc_clients_virt
 	}
 
 
 	// Connections
-	proto_java -> serv_java 
+	proto_java -> serv_java
 	serv_java -> serv_java_fork [constraint=false, style=dashed]
 
 	serv_java_fork -> signal_cli
@@ -192,7 +192,7 @@ digraph signal_libs {
 	matrix_clients_virt -> FluffyChat
 	matrix_clients_virt -> matrix_ellipsis
 	matrix -> matrix_weechat -> weechat
-	matrix -> matrix_xmpp -> xmpp_weechat 
+	matrix -> matrix_xmpp -> xmpp_weechat
 
 	signald -> xmpp -> xmpp_weechat -> weechat
 
