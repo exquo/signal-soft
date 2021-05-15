@@ -1,5 +1,4 @@
 Listing third-party libraries and clients for the [Signal](https://signal.org/) messenger.
-
 The full list is on the [**wiki**](https://github.com/exquo/signal-libs/wiki/Tools-list).
 
 
