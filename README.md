@@ -1,6 +1,6 @@
 Listing third-party libraries and clients for the [Signal](https://signal.org/) messenger.
 
-The full list is on the [**wiki**](https://github.com/exquo/signal-libs/wiki).
+The full list is on the [**wiki**](https://github.com/exquo/signal-libs/wiki/Tools-list).
 
 
 ### What
@@ -27,7 +27,7 @@ See also the [wiki's use-cases page](https://github.com/exquo/signal-libs/wiki/U
 
 ### Which
 
-See [**wiki**](https://github.com/exquo/signal-libs/wiki) for the full list.
+See [**wiki**](https://github.com/exquo/signal-libs/wiki/Tools-list) for the full list.
 
 Illustrating the number of the available options and their dependency paths:
 
